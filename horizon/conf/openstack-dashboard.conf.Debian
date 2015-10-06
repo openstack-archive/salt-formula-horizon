@@ -1,0 +1,24 @@
+{%- from "horizon/map.jinja" import server with context %}
+
+WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+WSGIDaemonProcess horizon user=horizon group=horizon processes={{ server.wsgi.processes }} threads={{ server.wsgi.threads }}
+WSGIProcessGroup horizon
+
+Alias /static /usr/share/openstack-dashboard/static
+
+<Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi>
+  Order allow,deny
+  Allow from all
+</Directory>
+
+<Directory /usr/share/openstack-dashboard/static>
+  <IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access 6 month"
+  </IfModule>
+  <IfModule mod_deflate.c>
+    SetOutputFilter DEFLATE
+  </IfModule>
+
+  Require all granted
+</Directory>

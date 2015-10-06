@@ -1,0 +1,70 @@
+# PBR should always appear first
+pbr>=0.6,!=0.7,<1.0
+# Horizon Core Requirements
+Babel>=1.3
+Django>=1.4.2,<1.7
+Pint>=0.5 # BSD
+django_compressor>=1.4
+django_openstack_auth>=1.1.7,!=1.1.8
+django-pyscss>=1.0.3 # BSD License (2 clause)
+eventlet>=0.16.1
+httplib2>=0.7.5
+iso8601>=0.1.9
+kombu>=2.5.0
+netaddr>=0.7.12
+oslo.concurrency>=1.4.1 # Apache-2.0
+oslo.config>=1.9.0 # Apache-2.0
+oslo.i18n>=1.3.0 # Apache-2.0
+oslo.serialization>=1.2.0 # Apache-2.0
+oslo.utils>=1.2.0 # Apache-2.0
+pyScss>=1.2.1,<1.3 # MIT License
+python-ceilometerclient>=1.0.6
+python-cinderclient>=1.1.0
+python-glanceclient>=0.15.0
+python-heatclient>=0.3.0
+python-keystoneclient>=1.1.0
+python-neutronclient>=2.3.11,<3
+python-novaclient>=2.18.0,!=2.21.0
+python-saharaclient>=0.7.6
+python-swiftclient>=2.2.0
+python-troveclient>=1.0.7
+python-mistralclient
+pytz>=2013.6
+PyYAML>=3.1.0
+six>=1.9.0
+XStatic>=1.0.0 # MIT License
+XStatic-Angular>=1.3.7 # MIT License
+XStatic-Angular-Bootstrap>=0.11.0.2 # MIT License
+XStatic-Angular-Irdragndrop>=1.0.2.1 # MIT License
+XStatic-Bootstrap-Datepicker>=1.3.1.0 # Apache 2.0 License
+XStatic-Bootstrap-SCSS>=3 # Apache 2.0 License
+XStatic-D3>=3.1.6.2 # BSD License (3 clause)
+XStatic-Hogan>=2.0.0.2 # Apache 2.0 License
+XStatic-Font-Awesome>=4.2.0 # SIL OFL 1.1 License, MIT License
+XStatic-Jasmine>=2.1.2.0 # MIT License
+XStatic-jQuery>=1.7.2 # MIT License
+XStatic-JQuery-Migrate>=1.2.1.1 # MIT License
+XStatic-JQuery.quicksearch>=2.0.3.1 # MIT License
+XStatic-JQuery.TableSorter>=2.0.5b.0 # MIT License
+XStatic-jquery-ui>=1.10.1 # MIT License
+XStatic-JSEncrypt>=2.0.0.2 # MIT License
+XStatic-QUnit>=1.14.0.2 # MIT License
+XStatic-Rickshaw>=1.5.0 # BSD License (prior)
+XStatic-smart-table>=1.4.5.3 # MIT License
+XStatic-Spin>=1.2.5.2 # MIT License
+XStatic-term.js
+cryptography
+greenlet>=0.4.5
+django-appconf
+stevedore
+gunicorn>=18.0
+python-memcached
+# not listed in global requirements
+beautifulsoup4
+django-floppyforms>=1.1
+yaql>=0.2.3,<0.3
+python-muranoclient>=0.5.5
+raven
+
+horizon-contrib>=2015.7.6
+django-wysiwyg-redactor

@@ -1,0 +1,1 @@
+salt-formula-horizon binary: shell-script-fails-syntax-check usr/share/salt-formulas/env/horizon/files/gunicorn_start

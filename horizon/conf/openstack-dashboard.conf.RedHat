@@ -1,0 +1,105 @@
+{% from "horizon/map.jinja" import server with context %}
+
+{% if not server.get('ssl', {}).get('enabled', False) %}
+
+WSGIDaemonProcess dashboard
+WSGIProcessGroup dashboard
+WSGISocketPrefix run/wsgi
+
+WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+Alias /static /usr/share/openstack-dashboard/static
+
+<Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi>
+  <IfModule mod_deflate.c>
+    SetOutputFilter DEFLATE
+    <IfModule mod_headers.c>
+      # Make sure proxies don’t deliver the wrong content
+      Header append Vary User-Agent env=!dont-vary
+    </IfModule>
+  </IfModule>
+
+  Order allow,deny
+  Allow from all
+</Directory>
+
+<Directory /usr/share/openstack-dashboard/static>
+  <IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access 6 month"
+  </IfModule>
+  <IfModule mod_deflate.c>
+    SetOutputFilter DEFLATE
+  </IfModule>
+
+  Order allow,deny
+  Allow from all
+</Directory>
+
+{% else %}
+
+#RedirectPermanent / https://{{ server.host.name }}
+
+WSGIDaemonProcess dashboard
+WSGIProcessGroup dashboard
+WSGISocketPrefix run/wsgi
+
+WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+Alias /static /usr/share/openstack-dashboard/static
+
+<Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi>
+  <IfModule mod_deflate.c>
+    SetOutputFilter DEFLATE
+    <IfModule mod_headers.c>
+      # Make sure proxies don’t deliver the wrong content
+      Header append Vary User-Agent env=!dont-vary
+    </IfModule>
+  </IfModule>
+
+  Order allow,deny
+  Allow from all
+</Directory>
+
+<Directory /usr/share/openstack-dashboard/static>
+  <IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access 6 month"
+  </IfModule>
+  <IfModule mod_deflate.c>
+    SetOutputFilter DEFLATE
+  </IfModule>
+
+  Order allow,deny
+  Allow from all
+</Directory>
+
+<VirtualHost {{ pillar.horizon.server.bind.address }}:443>
+  ServerName {{ server.host.name }}
+
+  SSLEngine On
+  SSLCertificateFile {{ server.certs_dir }}/{{ server.host.name }}.crt
+  SSLCertificateKeyFile {{ server.private_dir }}/{{ server.host.name }}.key
+  SSLCertificateChainFile {{ server.certs_dir }}/{{ server.ssl.authority }}-chain.crt
+  SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown/
+
+#  WSGIDaemonProcess dashboard
+#  WSGIProcessGroup dashboard
+#  WSGISocketPrefix run/wsgi
+
+  WSGIScriptAlias / /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+  Alias /static /usr/share/openstack-dashboard/static
+
+  <Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi>
+    <IfModule mod_deflate.c>
+      SetOutputFilter DEFLATE
+      <IfModule mod_headers.c>
+        # Make sure proxies don’t deliver the wrong content
+        Header append Vary User-Agent env=!dont-vary
+      </IfModule>
+    </IfModule>
+
+    Order allow,deny
+    Allow from all
+  </Directory>
+</VirtualHost>
+
+{% endif %}

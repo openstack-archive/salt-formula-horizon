@@ -1,0 +1,22 @@
+{% set server = salt['grains.filter_by']({
+    'Debian': {
+        'pkgs': ['openstack-dashboard', 'python-lesscpy', 'python-memcache'],
+        'ssl_pkgs': ['openstack-dashboard'],
+        'service': 'apache2',
+        'config': '/etc/openstack-dashboard/local_settings.py',
+        'apache_config': '/etc/apache2/conf-available/openstack-dashboard.conf',
+        'certs_dir': '/etc/ssl/certs',
+        'private_dir': '/etc/ssl/private',
+        'cache': {'host': '127.0.0.1', 'port': 11211}
+    },
+    'RedHat': {
+        'pkgs': ['openstack-dashboard', 'python-memcached'],
+        'ssl_pkgs': ['mod_ssl'],
+        'service': 'httpd',
+        'config': '/etc/openstack-dashboard/local_settings',
+        'apache_config': '/etc/httpd/conf.d/openstack-dashboard.conf',
+        'certs_dir': '/etc/pki/tls/certs',
+        'private_dir': '/etc/pki/tls/private',
+        'cache': {'host': '127.0.0.1', 'port': 11211}
+    },
+}, merge=salt['pillar.get']('horizon:server')) %}

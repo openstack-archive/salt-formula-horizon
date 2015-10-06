@@ -1,0 +1,6 @@
+applications:
+- horizon
+parameters:
+  horizon:
+    server:
+      enabled: true

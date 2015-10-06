@@ -1,0 +1,33 @@
+applications:
+- horizon
+parameters:
+  _param:
+    horizon_version: kilo
+    horizon_identity_host: kilo
+    horizon_identity_version: 3
+  horizon:
+    server:
+      enabled: true
+      version: ${_param:horizon_version}
+      secret_key: ${_param:horizon_secret_key}
+      bind:
+        address: ${_param:single_address}
+        port: 80
+      mail:
+        engine: dummy
+      cache:
+        engine: memcached
+        prefix: 'CACHE_HORIZON'
+        members:
+        - host: ${_param:single_address}
+          port: 11211
+      wsgi:
+        processes: 3
+        threads: 10
+      identity:
+        engine: keystone
+        host: ${_param:single_address}
+        port: 5000
+        host: ${_param:horizon_identity_host}
+        encryption: ${_param:horizon_identity_encryption}
+        api_version: ${_param:horizon_identity_version}

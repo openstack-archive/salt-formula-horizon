@@ -1,0 +1,30 @@
+#!/bin/bash
+{%- set app = salt['pillar.get']('horizon:server:app:'+app_name) %}
+
+NAME="horizon_{{ app_name }}"
+DJANGODIR=/srv/horizon/sites/{{ app_name }}
+USER=horizon
+GROUP=horizon
+NUM_WORKERS={{ app.get('workers', 3) }}
+DJANGO_SETTINGS_MODULE="{{ app.get('dashboard', 'openstack') }}_dashboard.settings"
+DJANGO_WSGI_MODULE=wsgi
+
+# Activate the virtual environment
+cd $DJANGODIR
+source /srv/horizon/sites/{{ app_name }}/bin/activate
+export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export PYTHONPATH=$DJANGODIR:{% for plugin_name, plugin in app.plugin.iteritems() %}/srv/horizon/sites/{{ app_name }}/plugins/{{ plugin_name }}:{% endfor %}$PYTHONPATH
+{%- if app.mistral_api is defined %}
+export OS_MISTRAL_URL=http://{{ app.mistral_api.host }}:{{ app.mistral_api.port }}/v2
+{%- endif %}
+
+# Start your Django Unicorn
+# Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
+exec /srv/horizon/sites/{{ app_name }}/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
+  --name $NAME \
+  --workers $NUM_WORKERS \
+  --user=$USER --group=$GROUP \
+  --log-level=debug \
+  --log-file=/var/log/horizon/{{ app_name }}_gunicorn.log \
+  --bind={{ app.bind.address }}:{{ app.bind.port }} \
+  --timeout=600
