@@ -15,9 +15,3 @@ ADD_EXCEPTIONS = {
     'not_found': exceptions.NOT_FOUND,
     'unauthorized': exceptions.UNAUTHORIZED,
 }
-
-ADD_JS_FILES = [
-    'muranodashboard/js/murano.service.js',
-    'muranodashboard/js/upload_form.js',
-    'muranodashboard/js/import_bundle_form.js',
-]
