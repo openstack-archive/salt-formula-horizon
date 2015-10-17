@@ -108,7 +108,12 @@ AUTHENTICATION_BACKENDS = ('csb_auth.backend.CSBackend',)
 {%- endif %}
 
 {%- if app.murano_api is defined %}
-MURANO_API_URL = "{{ app.murano_api.get("protocol", "http") }}://{{ app.murano_api.host }}:{{ app.murano_api.port }}"
+MURANO_API_URL = "http://{{ app.murano_api.host }}:{{ app.murano_api.port }}"
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# TODO(majklk) make this configurable
+MURANO_REPO_URL = 'http://storage.apps.openstack.org/'
+# this folder muset exists before start
+#METADATA_CACHE_DIR = '/var/cache/muranodashboard-cache'
 {%- endif %}
 
 {%- if app.helpdesk_api is defined %}
