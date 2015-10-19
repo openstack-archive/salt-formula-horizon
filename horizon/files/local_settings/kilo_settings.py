@@ -26,6 +26,7 @@ HORIZON_CONFIG = {
     'angular_modules': [],
     'js_files': [],
     'js_spec_files': [],
+    'password_autocomplete': 'on'
 }
 
 {%- if app.theme is defined %}
