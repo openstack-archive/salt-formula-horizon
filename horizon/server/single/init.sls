@@ -115,7 +115,7 @@ horizon_services:
   - watch:
     - file: horizon_config
     - file: horizon_apache_config
-    - file: horizon_log_dir
+    - file: horizon_log_file
 
 horizon_log_dir:
   file.directory:
@@ -123,6 +123,15 @@ horizon_log_dir:
     - user: horizon
     - group: adm
     - mode: 750
+
+horizon_log_file:
+  file.managed:
+    - name: /var/log/horizon/horizon.log
+    - user: horizon
+    - group: adm
+    - mode: 640
+    - require:
+      - file: horizon_log_dir
 
 {%- if server.get('api_versions', {}).identity is defined %}
 
