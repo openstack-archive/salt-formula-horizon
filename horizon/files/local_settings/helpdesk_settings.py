@@ -20,6 +20,7 @@ HORIZON_CONFIG = {
     'exceptions': {'recoverable': exceptions.RECOVERABLE,
                    'not_found': exceptions.NOT_FOUND,
                    'unauthorized': exceptions.UNAUTHORIZED},
+    'password_autocomplete': 'on'
 }
 
 INSTALLED_APPS = (
