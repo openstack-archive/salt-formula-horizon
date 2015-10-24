@@ -264,7 +264,7 @@ fix_contrail_{{ app_name }}:
 
 {%- endif %}
 
-{%- if plugin_name == "horizon_theme" and app.get("version", "juno") in ["kilo", 'helpdesk', 'liberty'] %}
+{%- if plugin_name == "horizon_theme" and app.get("version", "juno") in ["kilo", 'helpdesk'] %}
 
 /srv/horizon/sites/{{ app_name }}/local/lib/python2.7/site-packages/openstack_dashboard/dashboards/theme:
   file.symlink:
@@ -277,6 +277,24 @@ fix_contrail_{{ app_name }}:
 /srv/horizon/sites/{{ app_name }}/local/lib/python2.7/site-packages/openstack_dashboard/static/themes/{{ plugin.theme_name }}:
   file.symlink:
   - target: /srv/horizon/sites/{{ app_name }}/plugins/{{ plugin_name }}/horizon_theme/dashboards/theme/static/themes/{{ plugin.theme_name }}
+  - user: root
+  - group: root
+  - require:
+    - git: {{ app_name }}_{{ app.source.address }}
+
+{%- elif plugin_name == "horizon_theme" and app.get("version", "liberty") in ['liberty'] %}
+
+/srv/horizon/sites/{{ app_name }}/local/lib/python2.7/site-packages/openstack_dashboard/dashboards/theme:
+  file.symlink:
+  - target: /srv/horizon/sites/{{ app_name }}/plugins/{{ plugin_name }}/horizon_theme/dashboards/theme
+  - user: root
+  - group: root
+  - require:
+    - git: {{ app_name }}_{{ app.source.address }}
+
+/srv/horizon/sites/{{ app_name }}/local/lib/python2.7/site-packages/openstack_dashboard/themes/{{ plugin.theme_name }}:
+  file.symlink:
+  - target: /srv/horizon/sites/{{ app_name }}/plugins/{{ plugin_name }}/horizon_theme/static/{{ plugin.theme_name }}
   - user: root
   - group: root
   - require:
