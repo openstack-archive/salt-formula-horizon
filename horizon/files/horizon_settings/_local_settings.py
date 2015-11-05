@@ -150,12 +150,6 @@ GRAPHITE_HOST = "{{ plugin.metric.host }}"
 GRAPHITE_PORT = "{{ plugin.metric.port }}"
 GRAPHITE_ENDPOINT = 'http://%s:%s' % (GRAPHITE_HOST, GRAPHITE_PORT)
 {%- endif %}
-{%- else %}
-{%- if plugin.billing is defined %}
-GRAPHITE_HOST = "{{ plugin.billing.metric.host }}"
-GRAPHITE_PORT = "{{ plugin.billing.metric.port }}"
-GRAPHITE_ENDPOINT = 'http://%s:%s' % (GRAPHITE_HOST, GRAPHITE_PORT)
-{%- endif %}
 {%- endif %}
 
 {%- if plugin.overrides is defined %}
