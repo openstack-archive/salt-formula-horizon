@@ -178,10 +178,6 @@ STATICFILES_DIRS.append(('dashboard/js/', xstatic.main.XStatic(contrail).base_di
 
 {%- endif %}
 
-{%- if plugin.app == "horizon_telemetry" %}
-AUTHENTICATION_URLS += ['horizon_telemetry.graphite_urls']
-{%- endif %}
-
 {%- if plugin.urls is defined %}
 AUTHENTICATION_URLS += {{ plugin.urls|python }}
 {%- endif %}

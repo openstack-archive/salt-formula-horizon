@@ -66,5 +66,5 @@ yaql>=0.2.3,<0.3
 python-muranoclient>=0.5.5
 raven
 
-horizon-contrib>=2015.7.6
+horizon-contrib>=2015.11.6
 django-wysiwyg-redactor
