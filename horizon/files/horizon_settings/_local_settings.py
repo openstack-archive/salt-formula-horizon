@@ -20,6 +20,8 @@ SESSION_COOKIE_SECURE = True
 {%- endif %}
 {%- endif %}
 
+AUTHENTICATION_URLS = ['openstack_auth.urls']
+
 LOCAL_PATH = os.path.dirname(os.path.abspath(__file__))
 
 SECRET_KEY = '{{ app.secret_key }}'
@@ -174,6 +176,14 @@ pkg = __import__('contrail_openstack_dashboard.openstack_dashboard')
 
 STATICFILES_DIRS.append(('dashboard/js/', xstatic.main.XStatic(contrail).base_dir))
 
+{%- endif %}
+
+{%- if plugin.app == "horizon_telemetry" %}
+AUTHENTICATION_URLS += ['horizon_telemetry.graphite_urls']
+{%- endif %}
+
+{%- if plugin.urls is defined %}
+AUTHENTICATION_URLS += {{ plugin.urls|python }}
 {%- endif %}
 
 {%- endfor %}
