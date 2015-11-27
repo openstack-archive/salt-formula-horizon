@@ -1,0 +1,15 @@
+{%- from "horizon/map.jinja" import server with context %}
+name: Horizon
+description: Horizon is the canonical implementation of OpenStack’s Dashboard, which provides a web based user interface to OpenStack services including Nova, Swift, Keystone, etc.
+role:
+  server:
+    name: server
+    param: {}
+    endpoint:
+      {%- for app_name, app in server.get('app', {}).iteritems() %}
+      horizon_{{ app_name }}:
+        name: {{ app_name }}
+        type: horizon
+        address: "http://{{ app.bind.address }}:{{ app.bind.port }}/"
+        protocol: http
+      {%- endfor %}

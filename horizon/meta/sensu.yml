@@ -1,0 +1,19 @@
+{%- from "linux/map.jinja" import network with context -%}
+{%- from "horizon/map.jinja" import server with context -%}
+{%- if server.app is defined %}
+{%- for app_name, app in server.app.iteritems() %}
+{%- set site = salt['pillar.get']('nginx:server:site:horizon_'+app_name) %}
+local_supervisor_server_service_horizon_{{ app_name }}.{{ network.fqdn }}:
+  command: "PATH=$PATH:/etc/sensu/plugins check_supervisor_proc.py -p horizon_{{ app_name }}"
+  interval: 60
+  occurrences: 1
+  subscribers:
+  - {{ network.fqdn|replace('.', '-') }}
+remote_horizon_login_{{ app_name }}.{{ site.host.name }}:
+  command: "PATH=$PATH:/usr/local/bin oschecks-check_horizon_login -E {{ site.host.name }} -U :::openstack.user::: -P :::openstack.password::: -c /tmp/check_horizon_{{ app_name }}.{{ site.host.name }}_cookieFile"
+  interval: 120
+  occurrences: 1
+  subscribers:
+  - remote-network
+{%- endfor %}
+{%- endif %}

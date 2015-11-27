@@ -3,7 +3,7 @@
 Horizon 
 =======
 
-OpenStack dashboard project
+Horizon is the canonical implementation of OpenStack’s Dashboard, which provides a web based user interface to OpenStack services including Nova, Swift, Keystone, etc.
 
 Sample pillars
 ==============
