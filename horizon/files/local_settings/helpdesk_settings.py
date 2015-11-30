@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     {%- endif %}
     {%- endfor %}
     'helpdesk_auth',
+    'horizon_contrib',
     'redactor',
     'openstack_dashboard',
     'django.contrib.contenttypes',
