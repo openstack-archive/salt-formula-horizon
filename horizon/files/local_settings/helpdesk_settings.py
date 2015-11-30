@@ -5,6 +5,11 @@ from openstack_dashboard import exceptions
 {%- from "horizon/map.jinja" import server with context %}
 {%- set app = salt['pillar.get']('horizon:server:app:'+app_name) %}
 
+{% include "horizon/files/horizon_settings/_local_settings.py" %}
+{% include "horizon/files/horizon_settings/_horizon_settings.py" %}
+{% include "horizon/files/horizon_settings/_keystone_settings.py" %}
+
+
 # OpenStack Dashboard configuration.
 HORIZON_CONFIG = {
     'dashboards': ({% if app.plugin is defined %}{% for plugin_name, plugin in app.plugin.iteritems() %}{% if plugin.get('dashboard', False) %}'{{ plugin_name }}', {% endif %}{% endfor %}{% endif %}'admin', 'settings'),
@@ -32,6 +37,7 @@ INSTALLED_APPS = (
     {%- endif %}
     {%- endfor %}
     'helpdesk_auth',
+    'horizon_contrib',
     'redactor',
     'openstack_dashboard',
     'django.contrib.contenttypes',
@@ -55,7 +61,3 @@ ROOT_URLCONF = 'helpdesk_dashboard.url_overrides'
 AUTHENTICATION_BACKENDS = ('helpdesk_auth.backend.HelpdeskBackend',)
 
 AUTHENTICATION_URLS = ['helpdesk_auth.urls']
-
-{% include "horizon/files/horizon_settings/_local_settings.py" %}
-{% include "horizon/files/horizon_settings/_horizon_settings.py" %}
-{% include "horizon/files/horizon_settings/_keystone_settings.py" %}
