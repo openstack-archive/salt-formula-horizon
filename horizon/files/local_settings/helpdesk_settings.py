@@ -23,6 +23,8 @@ HORIZON_CONFIG = {
     'password_autocomplete': 'on'
 }
 
+SESSION_TIMEOUT = 3600 * 24
+
 INSTALLED_APPS = (
     {%- for plugin_name, plugin in app.plugin.iteritems() %}
     {%- if not plugin_name == 'horizon_theme' %}
