@@ -2,9 +2,10 @@ applications:
 - horizon
 parameters:
   _param:
-    horizon_version: kilo
-    horizon_identity_host: kilo
+    horizon_version: liberty
+    horizon_identity_host: localhost
     horizon_identity_version: 3
+    horizon_identity_encryption: none
   horizon:
     server:
       enabled: true
@@ -21,12 +22,8 @@ parameters:
         members:
         - host: ${_param:single_address}
           port: 11211
-      wsgi:
-        processes: 3
-        threads: 10
       identity:
         engine: keystone
-        host: ${_param:single_address}
         port: 5000
         host: ${_param:horizon_identity_host}
         encryption: ${_param:horizon_identity_encryption}
