@@ -1,56 +1,32 @@
 {%- from "horizon/map.jinja" import server with context %}
 {%- if server.enabled %}
 
-{%- if (server.ssl is defined) or (server.plugins is defined) %}
-
+{%- if server.ssl is defined %}
 include:
-{% if server.ssl is defined %}
 - horizon.server.single.ssl
-{% endif %}
-{%- if server.plugins is defined %}
-- horizon.server.single.plugins
 {%- endif %}
 
-{%- endif %}
-
-{%- if server.theme is defined %}
-
-{{ server.theme }}_theme_package:
-  pkg.installed:
-  - name: openstack-dashboard-{{ server.theme }}-theme
-  - require:
-    - pkg: horizon_packages
-  - watch_in:
-    - service: horizon_services
-    - cmd: horizon_collectstatic
-  - require:
-    - pkg: horizon_ubuntu_theme_absent
+{%- if grains.os == "ubuntu" %}
 
 horizon_ubuntu_theme_absent:
   pkg.purged:
   - name: openstack-dashboard-ubuntu-theme
-  - watch_in:
-    - cmd: horizon_collectstatic
 
 {%- endif %}
 
-horizon_collectstatic:
-  cmd.wait:
-  - names:
-    - python manage.py collectstatic --noinput; python manage.py compress --force
-  - cwd: /usr/share/openstack-dashboard
+{%- for plugin_name, plugin in server.get('plugin', {}) %}
+
+horizon_{{ plugin_name }}_package:
+  pkg.installed:
+  - name: {{ plugin.source.name }}
+  - watch_in:
+    - service: horizon_services
+
+{%- endfor %}
 
 horizon_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
-
-{% if server.get('contrail', False) %}
-
-horizon_contrail_packages:
-  pkg.installed:
-  - name: contrail-openstack-dashboard
-
-{% endif %}
 
 horizon_config:
   file.managed:
@@ -133,6 +109,7 @@ horizon_log_file:
     - require:
       - file: horizon_log_dir
 
+{#
 {%- if server.get('api_versions', {}).identity is defined %}
 
 horizon_keystone_policy:
@@ -154,5 +131,6 @@ raven:
     - name: raven >= 4
 
 {%- endif %}
+#}
 
 {%- endif %}
