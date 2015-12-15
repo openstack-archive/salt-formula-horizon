@@ -32,7 +32,7 @@ horizon_apache_port_config:
 horizon_apache_config:
   file.managed:
   - name: {{ server.apache_config }}
-  - source: salt://horizon/conf/openstack-dashboard.conf.{{ grains.os_family }}
+  - source: salt://horizon/files/openstack-dashboard.conf.{{ grains.os_family }}
   - template: jinja
   - mode: 644
   - user: root

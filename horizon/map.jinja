@@ -8,7 +8,7 @@
         'certs_dir': '/etc/ssl/certs',
         'private_dir': '/etc/ssl/private',
         'port_config_file': '/etc/apache2/ports.conf',
-        'port_config_template': 'salt://horizon/conf/ports.conf',
+        'port_config_template': 'salt://horizon/files/ports.conf',
         'cache': {'host': '127.0.0.1', 'port': 11211}
     },
     'RedHat': {
@@ -20,7 +20,7 @@
         'certs_dir': '/etc/pki/tls/certs',
         'private_dir': '/etc/pki/tls/private',
         'port_config_file': '/etc/httpd/conf/httpd.conf',
-        'port_config_template': 'salt://horizon/conf/httpd.conf.RedHat',
+        'port_config_template': 'salt://horizon/files/httpd.conf',
         'cache': {'host': '127.0.0.1', 'port': 11211}
     },
 }, merge=salt['pillar.get']('horizon:server')) %}

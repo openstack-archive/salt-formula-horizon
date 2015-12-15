@@ -1,7 +1,7 @@
 {%- from "horizon/map.jinja" import server with context %}
 {%- if server.enabled %}
 
-{%- if grains.os == "ubuntu" %}
+{%- if grains.os == "Ubuntu" %}
 
 horizon_ubuntu_theme_absent:
   pkg.purged:
