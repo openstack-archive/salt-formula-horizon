@@ -14,6 +14,9 @@ parameters:
       bind:
         address: ${_param:single_address}
         port: 80
+      wsgi:
+        processes: 3
+        threads: 10
       mail:
         engine: dummy
       cache:
