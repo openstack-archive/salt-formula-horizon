@@ -5,5 +5,11 @@ include:
 - horizon.server.multi.site
 {%- else %}
 {# production way #}
-- horizon.server.single
+- horizon.server.service
+{%- if pillar.horizon.server.plugin is defined %}
+- horizon.server.plugin
+{%- endif %}
+{%- if pillar.horizon.server.ssl is defined %}
+- horizon.server.ssl
+{%- endif %}
 {%- endif %}

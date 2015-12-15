@@ -7,6 +7,8 @@
         'apache_config': '/etc/apache2/conf-available/openstack-dashboard.conf',
         'certs_dir': '/etc/ssl/certs',
         'private_dir': '/etc/ssl/private',
+        'port_config_file': '/etc/apache2/ports.conf',
+        'port_config_template': 'salt://horizon/conf/ports.conf',
         'cache': {'host': '127.0.0.1', 'port': 11211}
     },
     'RedHat': {
@@ -17,6 +19,8 @@
         'apache_config': '/etc/httpd/conf.d/openstack-dashboard.conf',
         'certs_dir': '/etc/pki/tls/certs',
         'private_dir': '/etc/pki/tls/private',
+        'port_config_file': '/etc/httpd/conf/httpd.conf',
+        'port_config_template': 'salt://horizon/conf/httpd.conf.RedHat',
         'cache': {'host': '127.0.0.1', 'port': 11211}
     },
 }, merge=salt['pillar.get']('horizon:server')) %}

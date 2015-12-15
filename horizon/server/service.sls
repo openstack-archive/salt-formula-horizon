@@ -1,29 +1,6 @@
 {%- from "horizon/map.jinja" import server with context %}
 {%- if server.enabled %}
 
-{%- if server.ssl is defined %}
-include:
-- horizon.server.single.ssl
-{%- endif %}
-
-{%- if grains.os == "ubuntu" %}
-
-horizon_ubuntu_theme_absent:
-  pkg.purged:
-  - name: openstack-dashboard-ubuntu-theme
-
-{%- endif %}
-
-{%- for plugin_name, plugin in server.get('plugin', {}) %}
-
-horizon_{{ plugin_name }}_package:
-  pkg.installed:
-  - name: {{ plugin.source.name }}
-  - watch_in:
-    - service: horizon_services
-
-{%- endfor %}
-
 horizon_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
@@ -39,12 +16,10 @@ horizon_config:
   - require:
     - pkg: horizon_packages
 
-{%- if grains.os_family == 'RedHat' %}
-
 horizon_apache_port_config:
   file.managed:
-  - name: /etc/httpd/conf/httpd.conf
-  - source: salt://horizon/conf/httpd.conf.RedHat
+  - name: {{ server.port_config_file }}
+  - source: {{ server.port_config_template }}
   - template: jinja
   - mode: 644
   - user: root
@@ -53,25 +28,6 @@ horizon_apache_port_config:
     - service: horizon_services
   - require:
     - pkg: horizon_packages
-
-{%- endif %}
-
-{%- if grains.os_family == 'Debian' %}
-
-horizon_apache_port_config:
-  file.managed:
-  - name: /etc/apache2/ports.conf
-  - source: salt://horizon/conf/ports.conf
-  - template: jinja
-  - mode: 644
-  - user: root
-  - group: root
-  - require_in:
-    - service: horizon_services
-  - require:
-    - pkg: horizon_packages
-
-{%- endif %}
 
 horizon_apache_config:
   file.managed:

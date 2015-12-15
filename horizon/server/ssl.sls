@@ -1,5 +1,4 @@
 {%- from "horizon/map.jinja" import server with context %}
-
 {%- if server.ssl.enabled %}
 
 horizon_ssl_packages:
