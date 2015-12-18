@@ -5,6 +5,14 @@ horizon_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
 
+{%- if grains.os == "Ubuntu" %}
+
+horizon_ubuntu_theme_absent:
+  pkg.purged:
+  - name: openstack-dashboard-ubuntu-theme
+
+{%- endif %}
+
 horizon_config:
   file.managed:
   - name: {{ server.config }}
@@ -15,6 +23,10 @@ horizon_config:
   - group: root
   - require:
     - pkg: horizon_packages
+    {%- if grains.os == "Ubuntu" %}
+    - pkg: horizon_ubuntu_theme_absent
+    {%- endif %}
+
 
 horizon_apache_port_config:
   file.managed:
