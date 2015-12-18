@@ -1,5 +1,5 @@
 {%- from "horizon/map.jinja" import server with context %}
-{%- if server. %}
+{%- if server.plugin is defined %}
 
 {%- if server.get('plugin', {}).horizon_theme is defined %}
 
