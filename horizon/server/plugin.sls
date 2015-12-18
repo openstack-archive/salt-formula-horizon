@@ -18,6 +18,10 @@ horizon_horizon_theme_package:
 horizon_{{ plugin_name }}_package:
   pkg.installed:
   - name: {{ plugin.source.name }}
+  {%- if server.get('plugin', {}).horizon_theme is defined %}
+  - require:
+    - pkg: horizon_horizon_theme_package
+  {%- endif %}
   - watch_in:
     - service: horizon_services
 
