@@ -34,7 +34,7 @@ CUSTOM_THEME_PATH = 'themes/{{ app.theme }}'
 {%- elif app.plugin.horizon_theme.theme_name is defined %}
 # Enable custom theme if it is present.
 try:
-  from horizon_custom_theme import *
+  from openstack_dashboard.enabled._99_horizon_theme import CUSTOM_THEME_PATH
 except ImportError:
   pass
 {%- endif %}
