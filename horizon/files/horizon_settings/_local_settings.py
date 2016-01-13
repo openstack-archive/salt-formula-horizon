@@ -150,7 +150,7 @@ API_MASK_PROTOCOL = '{{ plugin.mask_protocol }}'
 {%- if plugin.metric.engine == "graphite" %}
 GRAPHITE_HOST = "{{ plugin.metric.host }}"
 GRAPHITE_PORT = "{{ plugin.metric.port }}"
-GRAPHITE_ENDPOINT = 'http://%s:%s' % (GRAPHITE_HOST, GRAPHITE_PORT)
+GRAPHITE_ENDPOINT = 'http://%s:%s/' % (GRAPHITE_HOST, GRAPHITE_PORT)
 {%- endif %}
 {%- endif %}
 
