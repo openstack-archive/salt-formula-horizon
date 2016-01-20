@@ -65,6 +65,12 @@ XStatic-term.js>=0.0.4 # MIT License
 
 horizon-contrib>=2015.10.0
 
+#contrail
+argparse
+cliff>=1.6.0
+simplejson>=2.2.0
+python-memcached
+
 # metadata update needs
 functools32==3.2.3-2
 jsonpointer==1.10
