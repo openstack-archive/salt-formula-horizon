@@ -17,7 +17,7 @@ horizon_user:
 {%- for app_name, app in server.app.iteritems() %}
 
 {%- if app.get('dashboard', 'openstack') in ['openstack', 'helpdesk'] %}
-{%- if app.get('version', 'juno') in ['juno', 'kilo', 'liberty'] %}
+{%- if app.get('version', 'juno') in ['juno', 'kilo', 'liberty', 'mitaka'] %}
 {%- set config_file = "/srv/horizon/sites/"+app_name+"/lib/python" + pillar.python.environment.get("version", "2.7") + "/site-packages/openstack_dashboard/local/local_settings.py" %}
 {%- else %}
 {%- set config_file = "/srv/horizon/sites/"+app_name+"/extra/openstack_dashboard/local/local_settings.py" %}
@@ -78,7 +78,7 @@ horizon_{{ app_name }}_logs:
   - require:
     - file: horizon_{{ app_name }}_dirs
 
-{%- if app.get('version', 'juno') in ['juno', 'kilo', 'helpdesk', 'liberty'] %}
+{%- if app.get('version', 'juno') in ['juno', 'kilo', 'helpdesk', 'liberty', 'mitaka'] %}
 
 horizon_setup_{{ app_name }}_horizon:
   cmd.run:
@@ -105,7 +105,7 @@ horizon_{{ app_name }}_config:
 
 {%- endif %}
 
-{%- if app.get('version', 'juno') in ['kilo', 'helpdesk', 'liberty'] %}
+{%- if app.get('version', 'juno') in ['kilo', 'helpdesk', 'liberty', 'mitaka'] %}
 
 /srv/horizon/sites/{{ app_name }}/static:
   file.symlink:
@@ -203,7 +203,7 @@ horizon_{{ app_name }}_config:
 
 {%- for dashboard_name, dashboard in app.get('dashboards', {}).iteritems() %}
 
-{%- if app.get('version', 'juno') in ['kilo', 'helpdesk', 'liberty'] %}
+{%- if app.get('version', 'juno') in ['kilo', 'helpdesk', 'liberty', 'mitaka'] %}
 
 horizon_{{ app_name }}_{{ dashboard_name }}_config:
   file.managed:
@@ -226,7 +226,7 @@ horizon_{{ app_name }}_{{ dashboard_name }}_config:
 
 {%- for plugin_name, plugin in app.plugin.iteritems() %}
 
-{%- if app.get('version', 'juno') in ['kilo', 'helpdesk', 'liberty'] %}
+{%- if app.get('version', 'juno') in ['kilo', 'helpdesk', 'liberty', 'mitaka'] %}
 
 horizon_{{ app_name }}_{{ plugin_name }}_config:
   file.managed:
@@ -255,7 +255,7 @@ horizon_{{ app_name }}_{{ plugin_name }}_config:
   - require_in:
     - cmd: horizon_setup_{{ app_name }}
 
-{%- if plugin_name == "contrail" and app.get("version", "juno") in ["juno", "kilo", 'helpdesk', 'liberty'] %}
+{%- if plugin_name == "contrail" and app.get("version", "juno") in ["juno", "kilo", 'helpdesk', 'liberty', 'mitaka'] %}
 
 fix_contrail_{{ app_name }}:
   cmd.run:
@@ -282,7 +282,7 @@ fix_contrail_{{ app_name }}:
   - require:
     - git: {{ app_name }}_{{ app.source.address }}
 
-{%- elif plugin_name == "horizon_theme" and app.get("version", "liberty") in ['liberty'] %}
+{%- elif plugin_name == "horizon_theme" and app.get("version", "liberty") in ['liberty', 'mitaka'] %}
 
 /srv/horizon/sites/{{ app_name }}/local/lib/python2.7/site-packages/openstack_dashboard/dashboards/theme:
   file.symlink:
