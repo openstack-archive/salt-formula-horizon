@@ -15,6 +15,8 @@ One horizon on server
 
 Simplest horizon setup with managed cloud-archive repo on ubuntu 12.04
 
+.. code-block:: yaml
+
     linux:
       system:
         name: horizon
@@ -45,6 +47,8 @@ Simplest horizon setup with managed cloud-archive repo on ubuntu 12.04
 
 Simple branded horizon
 
+.. code-block:: yaml
+
     horizon:
       server:
         enabled: true
@@ -53,6 +57,8 @@ Simple branded horizon
         help_url: 'http://doc.domain.com'
 
 Horizon package setup with SSL
+
+.. code-block:: yaml
 
     horizon:
       server:
@@ -79,6 +85,8 @@ Horizon package setup with SSL
 
 Multi-regional horizon setup
 
+.. code-block:: yaml
+
     horizon:
       server:
         enabled: true
@@ -103,6 +111,8 @@ Multi-regional horizon setup
           address: http://cluster2.example.com:5000/v2.0
 
 Horizon setup with sensu plugin
+
+.. code-block:: yaml
 
     horizon:
       server:
@@ -129,6 +139,8 @@ Horizon setup with sensu plugin
 
 Sensu multi API
 
+.. code-block:: yaml
+
     horizon:
       server:
         enabled: true
@@ -142,6 +154,8 @@ Sensu multi API
             port: 4567
 
 Horizon setup with billometer plugin
+
+.. code-block:: yaml
 
     horizon:
       server:
@@ -161,6 +175,8 @@ Horizon setup with billometer plugin
 
 Horizon setup with contrail plugin
 
+.. code-block:: yaml
+
     horizon:
       server:
         enabled: true
@@ -176,6 +192,8 @@ Horizon setup with contrail plugin
 
 Horizon setup with sentry log handler
 
+.. code-block:: yaml
+
     horizon:
       server:
         enabled: true
@@ -189,6 +207,8 @@ Multisite with Git source
 -------------------------
 
 Simple Horizon setup from git repository
+
+.. code-block:: yaml
 
     horizon:
       server:
@@ -214,6 +234,8 @@ Simple Horizon setup from git repository
               host: '127.0.0.1'
 
 Themed multisite setup
+
+.. code-block:: yaml
 
     horizon:
       server:
@@ -291,6 +313,8 @@ Themed multisite setup
 
 API versions override
 
+.. code-block:: yaml
+
     horizon:
       server:
         enabled: true
@@ -306,6 +330,8 @@ API versions override
               rev: stable/havana
 
 Control dashboard behaviour
+
+.. code-block:: yaml
 
     horizon:
       server:
