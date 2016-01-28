@@ -5,6 +5,7 @@ doc:
   role:
     server:
       name: server
+      {%- if pillar.horizon.server is defined %}
       endpoint:
         {%- for app_name, app in server.get('app', {}).iteritems() %}
         horizon_{{ app_name }}:
@@ -25,6 +26,7 @@ doc:
         packages:
           value: |
             {%- for pkg in server.pkgs %}
-            {%- set pkg_version = "dpkg -l dashboard | grep dashboard | awk '{print $3}'" %}
+            {%- set pkg_version = "dpkg -l "+pkg+" | grep "+pkg+" | awk '{print $3}'" %}
             * {{ pkg }}: {{ salt['cmd.run'](pkg_version) }}
             {%- endfor %}
+      {%- endif %}
