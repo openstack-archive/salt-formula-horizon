@@ -1,7 +1,7 @@
 {%- from "horizon/map.jinja" import server with context %}
 doc:
   name: Horizon
-  description: Horizon is the canonical implementation of OpenStack’s Dashboard, which provides a web based user interface to OpenStack services including Nova, Swift, Keystone, etc.
+  description: Horizon is the canonical implementation of OpenStacks Dashboard, which provides a web based user interface to OpenStack services including Nova, Swift, Keystone, etc.
   role:
     server:
       name: server
