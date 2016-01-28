@@ -1,5 +1,7 @@
 applications:
 - horizon
+classes:
+- service.horizon.support
 parameters:
   _param:
     horizon_version: liberty
