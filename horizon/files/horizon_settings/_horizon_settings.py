@@ -20,6 +20,10 @@
 # OpenStack services are using to determine role based access control in the
 # target installation.
 
+{%- if server.session_timeout is defined %}
+SESSION_TIMEOUT = {{ server.session_timeout }}
+{%- endif %}
+
 # Path to directory containing policy.json files
 #POLICY_FILES_PATH = os.path.join(ROOT_PATH, "conf")
 # Map of local copy of service policy files

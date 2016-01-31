@@ -3,6 +3,7 @@ horizon:
     enabled: true
     version: liberty
     secret_key: secret
+    session_timeout: 43200
     wsgi:
       processes: 3
       threads: 10

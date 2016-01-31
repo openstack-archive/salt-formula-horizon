@@ -11,6 +11,7 @@ parameters:
       enabled: true
       version: ${_param:horizon_version}
       secret_key: ${_param:horizon_secret_key}
+      session_timeout: 43200
       wsgi:
         processes: 3
         threads: 10

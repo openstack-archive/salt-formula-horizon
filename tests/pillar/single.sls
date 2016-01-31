@@ -3,6 +3,7 @@ horizon:
     enabled: true
     version: liberty
     secret_key: secret
+    session_timeout: 43200
     bind:
       address: 127.0.0.1
       port: 80
