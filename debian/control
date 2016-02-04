@@ -4,9 +4,9 @@ Section: admin
 Priority: optional
 Build-Depends: debhelper (>= 9)
 Standards-Version: 3.9.6
-Homepage: http://www.tcpcloud.eu
-Vcs-Browser: https://github.com/tcpcloud/salt-formula-horizon
-Vcs-Git: https://github.com/tcpcloud/salt-formula-horizon.git
+Homepage: https://wiki.openstack.org/wiki/OpenStackSalt
+Vcs-Browser: https://github.com/openstack/salt-formula-horizon
+Vcs-Git: https://github.com/openstack/salt-formula-horizon.git
 
 Package: salt-formula-horizon
 Architecture: all
