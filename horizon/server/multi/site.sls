@@ -10,6 +10,14 @@ horizon_user:
   - system: True
   - home: /srv/horizon
 
+/var/log/horizon:
+  file.directory:
+  - mode: 770
+  - user: horizon
+  - group: root
+  - require:
+    - user: horizon_user
+
 /srv/horizon/sites:
   file.directory:
   - makedirs: true
@@ -41,7 +49,6 @@ horizon_user:
   - require:
     - file: /srv/horizon/sites
     - pkg: horizon_packages
-    - pip: horizon_packages
 
 {{ app_name }}_{{ app.source.address }}:
   git.latest:
