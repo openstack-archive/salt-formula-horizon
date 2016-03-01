@@ -76,6 +76,8 @@ Alias /static /usr/share/openstack-dashboard/static
   ServerName {{ server.host.name }}
 
   SSLEngine On
+  SSLProtocol +TLSv1 +TLSv1.1 +TLSv1.2
+  SSLCipherSuite HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM
   SSLCertificateFile {{ server.certs_dir }}/{{ server.host.name }}.crt
   SSLCertificateKeyFile {{ server.private_dir }}/{{ server.host.name }}.key
   SSLCertificateChainFile {{ server.certs_dir }}/{{ server.ssl.authority }}-chain.crt
