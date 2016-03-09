@@ -3,12 +3,12 @@ from django.utils.translation import ugettext_lazy as _
 from openstack_dashboard import exceptions
 
 {%- from "horizon/map.jinja" import server with context %}
+
+{%- if server.app is defined %}
 {%- set app = salt['pillar.get']('horizon:server:app:'+app_name) %}
-
-{% include "horizon/files/horizon_settings/_local_settings.py" %}
-{% include "horizon/files/horizon_settings/_horizon_settings.py" %}
-{% include "horizon/files/horizon_settings/_keystone_settings.py" %}
-
+{%- else %}
+{%- set app = salt['pillar.get']('horizon:server') %}
+{%- endif %}
 
 # OpenStack Dashboard configuration.
 HORIZON_CONFIG = {
@@ -30,15 +30,19 @@ HORIZON_CONFIG = {
 
 SESSION_TIMEOUT = 3600 * 24
 
+{%- if app.theme is defined or app.plugin.horizon_theme is defined %}
+{%- if app.theme is defined %}
+CUSTOM_THEME_PATH = 'dashboards/theme/static/themes/{{ app.theme }}'
+{%- elif app.plugin.horizon_theme.theme_name is defined %}
+# Enable custom theme if it is present.
+try:
+  from openstack_dashboard.enabled._99_horizon_theme import CUSTOM_THEME_PATH
+except ImportError:
+  pass
+{%- endif %}
+{%- endif %}
+
 INSTALLED_APPS = (
-    {%- for plugin_name, plugin in app.plugin.iteritems() %}
-    {%- if not plugin_name == 'horizon_theme' %}
-    '{{ plugin.app }}',
-    {%- endif %}
-    {%- endfor %}
-    'helpdesk_auth',
-    'horizon_contrib',
-    'redactor',
     'openstack_dashboard',
     'django.contrib.contenttypes',
     'django.contrib.auth',
@@ -58,6 +62,14 @@ REDACTOR_UPLOAD = 'uploads/'
 
 ROOT_URLCONF = 'helpdesk_dashboard.url_overrides'
 
+{% include "horizon/files/horizon_settings/_keystone_settings.py" %}
+{% include "horizon/files/horizon_settings/_local_settings.py" %}
+
 AUTHENTICATION_BACKENDS = ('helpdesk_auth.backend.HelpdeskBackend',)
 
 AUTHENTICATION_URLS = ['helpdesk_auth.urls']
+
+API_RESULT_PAGE_SIZE = 25
+
+{% include "horizon/files/horizon_settings/_horizon_settings.py" %}
+
