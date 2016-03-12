@@ -1,0 +1,10 @@
+Code-Review+2: Ales Komarek <ales.komarek@tcpcloud.eu>
+Workflow+1: Ales Komarek <ales.komarek@tcpcloud.eu>
+Code-Review+2: Jakub Pavlik <pavlk.jakub@gmail.com>
+Workflow+1: Jakub Pavlik <pavlk.jakub@gmail.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Sat, 12 Mar 2016 14:03:40 +0000
+Reviewed-on: https://review.openstack.org/286638
+Project: openstack/salt-formula-horizon
+Branch: refs/heads/master
