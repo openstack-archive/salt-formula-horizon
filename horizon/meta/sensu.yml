@@ -1,7 +1,7 @@
 {%- from "linux/map.jinja" import network with context -%}
 {%- from "horizon/map.jinja" import server with context -%}
-check:
 {%- if server.app is defined %}
+check:
 {%- for app_name, app in server.app.iteritems() %}
 {%- set site = salt['pillar.get']('nginx:server:site:horizon_'+app_name) %}
   local_supervisor_server_service_horizon_{{ app_name }}.{{ network.fqdn }}:
@@ -17,4 +17,16 @@ check:
     subscribers:
     - remote-network
 {%- endfor %}
+{%- else %}
+{%- if server.host is defined %}
+check:
+  remote_horizon_login_{{ server.host.name }}_{{ server.host.get('port', 80) }}:
+    command: "PATH=$PATH:/usr/local/bin oschecks-check_horizon_login -E {{ server.host.name }} -U :::openstack.user::: -P :::openstack.password::: -c /tmp/check_horizon_{{ server.host.name }}_cookieFile"
+    interval: 120
+    occurrences: 1
+    subscribers:
+    - remote-network
+{%- else %}
+check: {}
+{%- endif %}
 {%- endif %}
