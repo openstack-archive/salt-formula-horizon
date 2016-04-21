@@ -5,6 +5,14 @@ horizon_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
 
+horizon_apache_package_absent:
+  pkg.purged:
+  - name: openstack-dashboard-apache
+  - require:
+    - pkg: horizon_packages
+  - watch_in:
+    - service: horizon_services
+
 horizon_config:
   file.managed:
   - name: {{ server.config }}
@@ -40,13 +48,15 @@ horizon_apache_config:
   - require:
     - pkg: horizon_packages
 
+{%- if grains.os_family == 'Debian' %}
 /etc/apache2/conf-enabled/openstack-dashboard.conf:
   file.symlink:
     - target: /etc/apache2/conf-available/openstack-dashboard.conf
-    
+
 apache_enable_wsgi:
   apache_module.enable:
     - name: wsgi
+{%- endif %}
 
 horizon_services:
   service.running:
