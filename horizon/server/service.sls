@@ -5,6 +5,14 @@ horizon_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
 
+horizon_apache_package_absent:
+  pkg.purged:
+  - name: openstack-dashboard-apache
+  - require:
+    - pkg: horizon_packages
+  - watch_in:
+    - service: horizon_services
+
 horizon_config:
   file.managed:
   - name: {{ server.config }}
