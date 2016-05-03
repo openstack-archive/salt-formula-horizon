@@ -20,6 +20,10 @@ SESSION_COOKIE_SECURE = True
 {%- endif %}
 {%- endif %}
 
+{%- if app.get('OPENSTACK_ENABLE_PASSWORD_RETRIEVE', False) %}
+OPENSTACK_ENABLE_PASSWORD_RETRIEVE = True
+{%- endif %}
+
 AUTHENTICATION_URLS = ['openstack_auth.urls']
 
 LOCAL_PATH = os.path.dirname(os.path.abspath(__file__))

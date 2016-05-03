@@ -35,6 +35,10 @@ CUSTOM_THEME_PATH = 'static/themes/{{ app.theme }}'
 CUSTOM_THEME_PATH = 'static/themes/{{ app.plugin.horizon_theme.theme_name }}'
 {%- endif %}
 
+{%- if app.get('disable_password_reveal', False) %}
+disable_password_reveal = True
+{%-endif %}
+
 INSTALLED_APPS = (
     'openstack_dashboard',
     'django.contrib.contenttypes',

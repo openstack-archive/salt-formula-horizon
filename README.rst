@@ -56,6 +56,39 @@ Simple branded horizon
         default_dashboard: 'admin'
         help_url: 'http://doc.domain.com'
 
+Simple horizon with Angular launch instance dialog
+
+.. code-block:: yaml
+
+    horizon:
+      server:
+        enabled: true
+        launch_instance_ng_enabled: True
+        default_dashboard: 'admin'
+        help_url: 'http://doc.domain.com'
+
+Simple horizon with OS password retrieval enabled
+
+.. code-block:: yaml
+
+    horizon:
+      server:
+        enabled: true
+        OPENSTACK_ENABLE_PASSWORD_RETRIEVE: True
+        default_dashboard: 'admin'
+        help_url: 'http://doc.domain.com'
+
+Simple horizon with disabled password input reveal buttons - New in version 2015.1(Kilo)
+
+.. code-block:: yaml
+
+    horizon:
+      server:
+        enabled: true
+        disable_password_reveal: True
+        default_dashboard: 'admin'
+        help_url: 'http://doc.domain.com'
+
 Horizon package setup with SSL
 
 .. code-block:: yaml

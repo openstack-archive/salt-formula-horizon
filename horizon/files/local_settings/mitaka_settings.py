@@ -40,6 +40,15 @@ except ImportError:
 {%- endif %}
 {%- endif %}
 
+{%- if app.get('disable_password_reveal', False) %}
+disable_password_reveal = True
+{%-endif %}
+
+{%- if not app.get('launch_instance_ng_enabled', True) %}
+LAUNCH_INSTANCE_LEGACY_ENABLED = True
+LAUNCH_INSTANCE_NG_ENABLED = False
+{%- endif %}
+
 INSTALLED_APPS = (
     'openstack_dashboard',
     'django.contrib.contenttypes',
