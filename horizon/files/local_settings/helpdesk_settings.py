@@ -65,7 +65,7 @@ ROOT_URLCONF = 'helpdesk_dashboard.url_overrides'
 {% include "horizon/files/horizon_settings/_keystone_settings.py" %}
 {% include "horizon/files/horizon_settings/_local_settings.py" %}
 
-AUTHENTICATION_BACKENDS = ('helpdesk_auth.backend.HelpdeskBackend',)
+AUTHENTICATION_BACKENDS = ({% if app.ldap is defined %}'django_auth_ldap.backend.LDAPBackend',{% endif %}'helpdesk_auth.backend.HelpdeskBackend',)
 
 AUTHENTICATION_URLS = ['helpdesk_auth.urls']
 
