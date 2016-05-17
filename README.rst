@@ -353,6 +353,30 @@ Control dashboard behaviour
               address: https://github.com/openstack/horizon.git
               rev: stable/juno
 
+Various setup
+-------------
+
+Mostly for non-openstack dashboard installations.
+
+LDAP auth support:
+
+.. code-block:: yaml
+
+    horizon:
+      server:
+        app:
+          myapp:
+            ldap:
+              url: "ldaps://idm.example.com"
+              binddn: "uid=apache,cn=users,cn=accounts,dc=example,dc=com"
+              password: "secretpassword"
+              basedn: "dc=example,dc=com"
+              require_group: myapp-users
+              flags_mapping:
+                is_active: myapp-users
+                is_staff: myapp-admins
+                is_superuser: myapp-admins
+
 Read more
 =========
 

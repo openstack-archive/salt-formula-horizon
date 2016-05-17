@@ -5,6 +5,14 @@ horizon_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
 
+{%- if server.ldap is defined %}
+horizon_ldap_package:
+  pkg.installed:
+  - name: python-django-auth-ldap
+  - watch_in:
+    - service: horizon_services
+{%- endif %}
+
 horizon_apache_package_absent:
   pkg.purged:
   - name: openstack-dashboard-apache

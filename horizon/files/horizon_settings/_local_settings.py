@@ -191,3 +191,48 @@ RAVEN_CONFIG = {
 {%- endif %}
 
 SITE_BRANDING = '{{ app.get('branding', 'OpenStack Dashboard') }}'
+
+{%- if app.ldap is defined %}
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
+
+# Baseline configuration.
+AUTH_LDAP_SERVER_URI = "{{ app.ldap.url }}"
+{%- if app.ldap.binddn is defined %}
+AUTH_LDAP_BIND_DN = "{{ app.ldap.binddn }}"
+AUTH_LDAP_BIND_PASSWORD = "{{ app.ldap.password }}"
+{%- endif %}
+AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,cn=users,cn=accounts,{{ app.ldap.basedn }}"
+
+# Set up the basic group parameters.
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("cn=groups,cn=accounts,{{ app.ldap.basedn }}",
+                                    ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)"
+                                    )
+AUTH_LDAP_GROUP_TYPE = GroupOfNamesType()
+
+{%- if app.ldap.require_group is defined %}
+# Simple group restrictions
+AUTH_LDAP_REQUIRE_GROUP = "cn={{ app.ldap.require_group }},cn=groups,cn=accounts,{{ app.ldap.basedn }}"
+{%- endif %}
+
+# Populate the Django user from the LDAP directory.
+AUTH_LDAP_USER_ATTR_MAP = {
+    "first_name": "{{ app.ldap.get('first_name_attr', 'givenName') }}",
+    "last_name": "{{ app.ldap.get('last_name_attr', 'sn') }}",
+    "email": "{{ app.ldap.get('email_attr', 'mail') }}"
+}
+
+{%- if app.ldap.flags_mapping is defined %}
+AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+    {%- for flag, group in app.ldap.flags_mapping.iteritems() %}
+    "{{ flag }}": "cn={{ group }},cn=groups,cn=accounts,{{ app.ldap.basedn }}",
+    {%- endfor %}
+}
+{%- endif %}
+
+# Use LDAP group membership to calculate group permissions.
+AUTH_LDAP_FIND_GROUP_PERMS = True
+
+# Cache group memberships for an hour to minimize LDAP traffic
+AUTH_LDAP_CACHE_GROUPS = True
+AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
+{%- endif %}

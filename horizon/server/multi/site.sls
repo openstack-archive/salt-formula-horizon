@@ -50,6 +50,17 @@ horizon_user:
     - file: /srv/horizon/sites
     - pkg: horizon_packages
 
+{%- if app.ldap is defined %}
+horizon_{{ app_name }}_django_auth_ldap:
+  pip.installed:
+  - name: django_auth_ldap
+  - bin_env: /srv/horizon/sites/{{ app_name }}
+  - require:
+    - virtualenv: /srv/horizon/sites/{{ app_name }}
+  - require_in:
+    - file: horizon_{{ app_name }}_config
+{%- endif %}
+
 {{ app_name }}_{{ app.source.address }}:
   git.latest:
   - name: {{ app.source.address }}
