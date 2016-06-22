@@ -83,4 +83,15 @@ horizon_log_file:
     - require:
       - file: horizon_log_dir
 
+{%- if grains.get('virtual_subtype', None) == "Docker" %}
+
+horizon_entrypoint:
+  file.managed:
+  - name: /entrypoint.sh
+  - template: jinja
+  - source: salt://horizon/files/entrypoint.sh
+  - mode: 755
+
+{%- endif %}
+
 {%- endif %}
