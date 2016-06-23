@@ -6,7 +6,7 @@ mv /tmp/horizon-server.sls /srv/salt/pillar/horizon-server.sls
 
 salt-call --local --retcode-passthrough state.highstate
 
-{% for service in server.services %}
+{% for service in server.service %}
 service {{ service }} stop || true
 {% endfor %}
 
