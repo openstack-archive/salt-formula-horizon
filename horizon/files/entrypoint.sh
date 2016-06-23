@@ -6,9 +6,7 @@ mv /tmp/horizon-server.sls /srv/salt/pillar/horizon-server.sls
 
 salt-call --local --retcode-passthrough state.highstate
 
-{% for service in server.service %}
-service {{ service }} stop || true
-{% endfor %}
+service {{ server.service }} stop || true
 
 export APACHE_RUN_USER=horizon
 export APACHE_RUN_GROUP=horizon
@@ -17,7 +15,7 @@ export APACHE_RUN_DIR=/var/run/apache2
 export APACHE_LOCK_DIR=/var/lock/apache2
 export APACHE_LOG_DIR=/var/log/apache2
 
-su horizon --shell=/bin/sh -c 'apachectl -DFOREGROUND'
+apachectl -DFOREGROUND
 
 {#-
 vim: syntax=jinja

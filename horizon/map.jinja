@@ -1,6 +1,6 @@
 {% set server = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['apache2', 'openstack-dashboard', 'python-lesscpy', 'python-memcache'],
+        'pkgs': ['apache2', 'openstack-dashboard', 'python-lesscpy', 'python-memcache', 'gettext-base'],
         'pkgs_multi': ['python-memcache', 'python-psycopg2', 'python-imaging',
             'python-docutils', 'python-simplejson', 'build-essential',
             'libxslt1-dev', 'libxml2-dev', 'libffi-dev', 'libssl-dev',
