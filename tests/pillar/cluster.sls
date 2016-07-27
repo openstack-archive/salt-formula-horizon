@@ -4,6 +4,12 @@ horizon:
     version: liberty
     secret_key: secret
     session_timeout: 43200
+    plugin:
+      horizon_theme:
+        theme_name: ubuntu
+        source:
+          engine: pkg
+          name: openstack-dashboard-ubuntu-theme
     wsgi:
       processes: 3
       threads: 10
@@ -22,6 +28,7 @@ horizon:
         port: 11211
     identity:
       engine: keystone
+      encryption: encryption
       host: 127.0.0.1
       port: 5000
       api_version: 2
