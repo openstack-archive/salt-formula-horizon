@@ -26,11 +26,15 @@ OPENSTACK_API_VERSIONS = {
 # with Keystone V3. All entities will be created in the default domain.
 # OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = 'Default'
 
-# For multiple regions uncomment this configuration, and add (endpoint, title).
-# AVAILABLE_REGIONS = [
-#     ('http://cluster1.example.com:5000/v2.0', 'cluster1'),
-#     ('http://cluster2.example.com:5000/v2.0', 'cluster2'),
-# ]
+{%- if app.regions is defined %}
+AVAILABLE_REGIONS = [
+{% for region in app.regions -%}
+    ('{{ region.api }}','{{ region.name }}')
+    {%- if not loop.last -%},{%- endif -%}
+{%- endfor -%}
+]
+{%- endif %}
+
 
 OPENSTACK_HOST = "{{ app.identity.host }}"
 {%- if app.get('api_versions', {}).identity is defined %}
