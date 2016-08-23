@@ -54,7 +54,11 @@ horizon_user:
   git.latest:
   - name: {{ app.source.address }}
   - target: /srv/horizon/sites/{{ app_name }}/extra
+  {%- if grains.saltversioninfo.0 > 2015 %}
+  - branch: {{ app.source.revision }}
+  {%- else %}
   - rev: {{ app.source.revision }}
+  {%- endif %}
   - depth: 1
   - submodules: True
   - require:
