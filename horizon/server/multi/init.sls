@@ -2,6 +2,6 @@
 {%- if server.enabled %}
 
 include:
-- horizon.server.multi.service_git
+- horizon.server.multi.service
 
 {%- endif %}
