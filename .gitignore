@@ -2,4 +2,3 @@ tests/build/
 *.swp
 *.pyc
 .ropeproject
-.kitchen
