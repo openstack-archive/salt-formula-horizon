@@ -56,6 +56,39 @@ Simple branded horizon
         default_dashboard: 'admin'
         help_url: 'http://doc.domain.com'
 
+Simple horizon with specified panel disabled - New in version 2014.1(Icehouse)
+
+.. code-block:: yaml
+
+    horizon:
+      server:
+        enabled: true
+        default_dashboard: 'admin'
+        help_url: 'http://doc.domain.com'
+        panel:
+          plugin_panel:
+            priority: 80
+            dashboard: 'admin'
+            group: 'admin'
+            enabled: False
+
+Simple horizon with specified panel enabled - New in version 2014.1(Icehouse)
+
+.. code-block:: yaml
+
+    horizon:
+      server:
+        enabled: true
+        default_dashboard: 'admin'
+        help_url: 'http://doc.domain.com'
+        panel:
+          plugin_panel:
+            priority: 80
+            dashboard: 'admin'
+            group: 'admin'
+            class: 'test_panels.plugin_panel.panel.PluginPanel'
+            enabled: True
+
 Horizon package setup with SSL
 
 .. code-block:: yaml

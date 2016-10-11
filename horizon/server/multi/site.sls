@@ -165,6 +165,27 @@ horizon_{{ app_name }}_config:
 
 {%- endif %}
 
+{%- if app.panel is defined %}
+
+{%- for panel_name, panel in app.panel.iteritems() %}
+
+/srv/horizon/sites/{{ app_name }}/local/lib/python2.7/site-packages/openstack_dashboard/local/enabled/_{{ panel.priority }}_{{ panel.dashboard }}_{{ panel_name }}_panel.py:
+  file.managed:
+  - source: salt://horizon/files/enabled/panel.py
+  - template: jinja
+  - mode: 644
+  - user: root
+  - group: root
+  - defaults:
+    panel_name: {{ panel_name }}
+    panel: {{ panel }}
+  - require:
+    - pkg: horizon_packages
+
+{%- endfor %}
+
+{%- endif %}
+
 /srv/horizon/sites/{{ app_name }}/manage.py:
   file.managed:
   - source: salt://horizon/files/manage.py
