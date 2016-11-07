@@ -28,7 +28,7 @@ HORIZON_CONFIG = {
     'js_spec_files': [],
     'password_autocomplete': 'on'
 }
-{%- if app.theme is defined or app.plugin.horizon_theme is defined %}
+{%- if app.theme is defined or (app.plugin is defined and app.plugin.horizon_theme is defined) %}
 {%- if app.theme is defined %}
 CUSTOM_THEME_PATH = 'themes/{{ app.theme }}'
 {%- elif app.plugin.horizon_theme.theme_name is defined %}

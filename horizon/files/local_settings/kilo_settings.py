@@ -31,7 +31,7 @@ HORIZON_CONFIG = {
 
 {%- if app.theme is defined %}
 CUSTOM_THEME_PATH = 'static/themes/{{ app.theme }}'
-{%- elif app.plugin.horizon_theme.theme_name is defined %}
+{%- elif app.plugin is defined and app.plugin.horizon_theme.theme_name is defined %}
 CUSTOM_THEME_PATH = 'static/themes/{{ app.plugin.horizon_theme.theme_name }}'
 {%- endif %}
 
