@@ -11,25 +11,14 @@ Sample pillars
 Packaged version of horizon
 ---------------------------
 
-One horizon on server
-
-Simplest horizon setup with managed cloud-archive repo on ubuntu 12.04
+Simplest horizon setup
 
 .. code-block:: yaml
 
-    linux:
-      system:
-        name: horizon
-        repo:
-         - cloudarchive-havana:
-            enabled: true
-            source: 'deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/havana main'
-            pgpcheck: 0
     horizon:
       server:
-        manage_repo: true
         enabled: true
-        secret_key: MEGASECRET
+        secret_key: secret
         host:
           name: cloud.lab.cz
         cache:
@@ -121,21 +110,13 @@ Horizon setup with sensu plugin
         sensu_api:
           host: localhost
           port: 4567
-        plugins:
-        - name: monitoring
-          app: horizon_monitoring
-          source:
-            type: git
-            address: git@repo1.robotice.cz:django/horizon-monitoring.git
-            rev: develop
-        - name: api-mask
-          app: api_mask
-          mask_url: 'custom-url.cz'
-          mask_protocol: 'http'
-          source:
-            type: git
-            address: git@repo1.robotice.cz:django/horizon-api-mask.git
-            rev: develop
+        plugin:
+          monitoring:
+            app: horizon_monitoring
+            source:
+              type: git
+              address: git@repo1.robotice.cz:django/horizon-monitoring.git
+              rev: develop
 
 Sensu multi API
 
@@ -153,6 +134,24 @@ Sensu multi API
             host: anotherhost
             port: 4567
 
+Horizon setup with jenkins plugin
+
+.. code-block:: yaml
+
+    horizon:
+      server:
+        enabled: true
+        version: juno
+        jenkins_api:
+          url: https://localhost:8080
+          user: admin
+          password: pwd
+        plugin:
+          jenkins:
+            app: horizon_jenkins
+            source:
+              type: pkg
+
 Horizon setup with billometer plugin
 
 .. code-block:: yaml
@@ -165,13 +164,13 @@ Horizon setup with billometer plugin
           host: localhost
           port: 9753
           api_version: 1
-        plugins:
-        - name: billing
-          app: horizon_billing
-          source:
-            type: git
-            address: git@repo1.robotice.cz:django/horizon-billing.git
-            rev: develop
+        plugin:
+          billing:
+            app: horizon_billing
+            source:
+              type: git
+              address: git@repo1.robotice.cz:django/horizon-billing.git
+              rev: develop
 
 Horizon setup with contrail plugin
 
@@ -181,14 +180,14 @@ Horizon setup with contrail plugin
       server:
         enabled: true
         version: icehouse
-        plugins:
-        - name: contrail
-          app: contrail_openstack_dashboard
-          override: true
-          source:
-            type: git
-            address: git@repo1.robotice.cz:django/horizon-contrail.git
-            rev: develop
+        plugin:
+          contrail:
+            app: contrail_openstack_dashboard
+            override: true
+            source:
+              type: git
+              address: git@repo1.robotice.cz:django/horizon-contrail.git
+              rev: develop
 
 Horizon setup with sentry log handler
 
@@ -338,7 +337,7 @@ Control dashboard behaviour
         enabled: true
         app:
           openstack_dashboard_overrride:
-            secret_key: MEGASECRET1
+            secret_key: password
             dashboards:
               settings:
                 enabled: true
@@ -358,12 +357,3 @@ Read more
 
 * https://github.com/openstack/horizon
 * http://dijks.wordpress.com/2012/07/06/how-to-change-screen-resolution-of-novnc-client-in-openstack-essex-dashboard-nova-horizon/
-
-
-Things to improve
-=================
-
-* ALLOWED_HOSTS - do not use * - introduce parameters
-* CACHES - configure caching engine - is it not allowed by default?
-* SESSION_ENGINE - change it from signed cookie to something else
-* policy files - look into these files and think of further configuration/parametrisation

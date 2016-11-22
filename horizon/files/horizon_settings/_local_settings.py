@@ -76,6 +76,12 @@ UENC_PORT = '{{ app.uenc_api.port }}'
 OPENSTACK_CONTROL_NODES = {{ app.control_nodes|python }}
 {%- endif %}
 
+{%- if app.jenkins_api is defined %}
+HORIZON_JENKINS_URL = "{{ app.jenkins_api.url }}"
+HORIZON_JENKINS_USERNAME = "{{ app.jenkins_api.user }}"
+HORIZON_JENKINS_PASSWORD = "{{ app.jenkins_api.password }}"
+{%- endif %}
+
 {%- if app.sensu_api is defined %}
 {%- if app.sensu_api.host is defined %}
 SENSU_HOST = '{{ app.sensu_api.host }}'
