@@ -1,0 +1,22 @@
+{%- from "horizon/map.jinja" import server with context %}
+log_collector:
+  decoder:
+    horizon_apache_access:
+      engine: sandbox
+      module_file: /usr/share/lma_collector/decoders/lma_apache_access.lua
+      module_dir: /usr/share/lma_collector/common;/usr/share/heka/lua_modules
+      adjust_timezone: true
+      config:
+        type: "log"
+        log_format: '{{ server.apache_log_format }}'
+        user_agent_transform: true
+        payload_keep: true
+  input:
+    horizon_apache_access:
+      engine: logstreamer
+      log_directory: "{{ server.apache_log_dir}}"
+      file_match: '{{ server.apache_log_filename }}_access(?P<Service>.*)\.log\.?(?P<Seq>\d*)'
+      differentiator: [ 'openstack.horizon', 'Service' ]
+      priority: ["^Seq"]
+      decoder: "horizon_apache_access_decoder"
+      splitter: "TokenSplitter"

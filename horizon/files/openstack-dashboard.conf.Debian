@@ -26,8 +26,9 @@
     Require all granted
   </Directory>
   ServerSignature Off
+  LogFormat "{{ server.apache_log_format }}" horizon
   ErrorLog "{{ server.apache_log_dir }}/{{ server.apache_log_filename }}_error.log"
-  CustomLog "{{ server.apache_log_dir }}/{{ server.apache_log_filename }}_access.log" combined
+  CustomLog "{{ server.apache_log_dir }}/{{ server.apache_log_filename }}_access.log" horizon
 
 </VirtualHost>
 
@@ -61,8 +62,9 @@
   </Directory>
 
   ServerSignature Off
-  ErrorLog "{{ server.apache_log_dir }}/{{ server.apache_log_filename }}_ssl_error.log"
-  CustomLog "{{ server.apache_log_dir }}/{{ server.apache_log_filename }}_access_ssl.log" combined
+  LogFormat "{{ server.apache_log_format }}" horizon
+  ErrorLog "{{ server.apache_log_dir }}/{{ server.apache_log_filename }}_error_ssl.log"
+  CustomLog "{{ server.apache_log_dir }}/{{ server.apache_log_filename }}_access_ssl.log" horizon
 </VirtualHost>
 
 {% endif %}
