@@ -49,13 +49,16 @@ horizon_apache_config:
     - pkg: horizon_packages
 
 {%- if grains.os_family == 'Debian' %}
-/etc/apache2/conf-enabled/openstack-dashboard.conf:
-  file.symlink:
-    - target: /etc/apache2/conf-available/openstack-dashboard.conf
-
 apache_enable_wsgi:
   apache_module.enable:
     - name: wsgi
+
+enable_horizon_apache_config:
+  apache_conf.enable:
+  - name: openstack-dashboard
+  - require:
+    - file: horizon_apache_config
+    - apache_module: apache_enable_wsgi
 {%- endif %}
 
 horizon_services:
