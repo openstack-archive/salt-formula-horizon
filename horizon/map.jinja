@@ -1,11 +1,13 @@
+{%- set dashboard_package = salt['pillar.get']('horizon:server:package', 'openstack-dashboard') %}
+
 {% set server = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['apache2', 'openstack-dashboard', 'python-lesscpy', 'python-memcache', 'gettext-base'],
+        'pkgs': ['apache2', dashboard_package, 'python-lesscpy', 'python-memcache', 'gettext-base'],
         'pkgs_multi': ['python-memcache', 'python-psycopg2', 'python-imaging',
             'python-docutils', 'python-simplejson', 'build-essential',
             'libxslt1-dev', 'libxml2-dev', 'libffi-dev', 'libssl-dev',
             'gettext', 'python-lesscpy'],
-        'ssl_pkgs': ['openstack-dashboard'],
+        'ssl_pkgs': [dashboard_package],
         'service': 'apache2',
         'config': '/etc/openstack-dashboard/local_settings.py',
         'apache_config': '/etc/apache2/conf-available/openstack-dashboard.conf',
@@ -19,7 +21,7 @@
         'cache': {'host': '127.0.0.1', 'port': 11211}
     },
     'RedHat': {
-        'pkgs': ['httpd', 'openstack-dashboard', 'python-lesscpy', 'python-memcached'],
+        'pkgs': ['httpd', dashboard_package, 'python-lesscpy', 'python-memcached'],
         'pkgs_multi': ['python-memcached', 'python-psycopg2', 'python-pillow',
             'python-docutils', 'python-simplejson', 'libxslt-devel', 'gcc',
             'libxml2-devel', 'libffi-devel', 'openssl-devel',
