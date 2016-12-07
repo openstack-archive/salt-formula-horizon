@@ -25,6 +25,11 @@ horizon:
       host: 127.0.0.1
       port: 5000
       api_version: 2
+    websso:
+      enabled: true
+      login_url: "WEBROOT + 'auth/login/'"
+      logout_url: "WEBROOT + 'auth/logout/'"
+      websso_choices: saml2
 haproxy:
   proxy:
     listens:

@@ -34,3 +34,5 @@ parameters:
         host: ${_param:horizon_identity_host}
         encryption: ${_param:horizon_identity_encryption}
         api_version: ${_param:horizon_identity_version}
+      websso:
+        enabled: false
