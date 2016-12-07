@@ -24,3 +24,9 @@ horizon:
       host: 127.0.0.1
       encryption: encryption
       api_version: 2
+    websso:
+      login_url: "WEBROOT + 'auth/login/'"
+      logout_url: "WEBROOT + 'auth/logout/'"
+      websso_choices:
+        - saml2
+        - oidc

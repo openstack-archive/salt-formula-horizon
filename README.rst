@@ -352,6 +352,20 @@ Control dashboard behaviour
               address: https://github.com/openstack/horizon.git
               rev: stable/juno
 
+Enable WebSSO feature
+
+.. code-block:: yaml
+
+    horizon:
+      server:
+        enabled: true
+        websso:
+          login_url: "WEBROOT + 'auth/login/'"
+          logout_url: "WEBROOT + 'auth/logout/'"
+          websso_choices:
+            - saml2
+            - oidc
+
 Read more
 =========
 
