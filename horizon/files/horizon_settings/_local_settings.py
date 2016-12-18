@@ -28,6 +28,12 @@ SECRET_KEY = '{{ app.secret_key }}'
 
 CACHES = {
     'default': {
+
+        'OPTIONS': {
+                'DEAD_RETRY': 1,
+                'SERVER_RETRIES': 1,
+                'SOCKET_TIMEOUT': 1,
+        },
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         {%- if app.cache.members is defined %}
         'LOCATION': "{%- for member in app.cache.members %}{{ member.host }}:{{ member.port }}{% if not loop.last %};{% endif %}{%- endfor %}"
