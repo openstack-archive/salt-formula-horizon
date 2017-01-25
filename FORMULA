@@ -1,8 +1,0 @@
-name: horizon
-os: Debian, RedHat
-os_family: Debian, RedHat
-version: 201606
-release: 1
-summary: Formula for installing and configuring horizon
-description: Formula for installing and configuring horizon
-top_level_dir: horizon

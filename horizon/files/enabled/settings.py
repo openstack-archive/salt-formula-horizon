@@ -1,2 +1,0 @@
-
-ENABLED = {{enabled | python}}
